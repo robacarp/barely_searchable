@@ -10,7 +10,7 @@ It is a terrible and slow search engine....but it'll probably work for a handful
 
 Add this line to your application's Gemfile: `gem 'barely_searchable'`
 
-## Usage
+## Quickstart
 
 In your model:
 
@@ -28,6 +28,25 @@ Now elsewhere in your application:
     @users = User.search 'user@domain.com'
   end
 ```
+
+## More details:
+
+In your models, you can specify conditions on the search parameters to exclude them from searches.  This is useful for search query optimization or selective searches.
+
+```
+class Order < ActiveRecord::Base
+  #search these columns always
+  searches_on :user_id, :shipping_city
+
+  # Will only search these columns when the type-casted value isn't zero
+  searches_on :subtotal, :tax, :total, unless: Proc.new{|value| value == 0}
+
+  # Only search this column if the query is longer thahn 3 characters
+  searches_on :email, if: Proc.new{|value| value.length > 3}
+end
+```
+
+Search content is cast to the column data type before calling if/unless blocks.
 
 ## Contributing
 
