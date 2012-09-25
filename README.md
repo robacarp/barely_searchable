@@ -1,10 +1,10 @@
 # BarelySearchable
 
-This is a bare-bones almost functional "search" ability for your model layer.
+This is a bare-bones "search" function for your model layer.  Use with care, this is sequel trickery.
 
-It adds `.search` to your models which builds out a simple `LIKE OR` query to search your models and requires no external service to index the your tables or any index tables.
+It adds `.search` to your models which builds out a simple `LIKE OR` type query to search your models and requires no external service (eg. sphinx) to index the your tables or any index tables.
 
-It is a terrible and slow search engine....but it'll probably work for a handful of use cases until you quit being lazy and install Sphinx.
+As far as search engines go, this isn't very clever. It'll work for a handful of use cases, at least until you quit being lazy and install Sphinx.  :D
 
 ## Installation
 
@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
   #define the fields it'll search on
   searches_on :id, :username, :email, :first_name, :last_name
 end
+
+class Entry < ActiveRecord::Base
+  searches_on :title, :body
+end
 ```
 
 Now elsewhere in your application:
@@ -26,6 +30,11 @@ Now elsewhere in your application:
 ```
   def search_users
     @users = User.search 'user@domain.com'
+  end
+  
+  def search_blogs
+    #Regular model querying methods still work just fine.
+    @entries = Entry.with_permissions_to(:show).search("friendship is unnecessary, like philosophy").limit(15)
   end
 ```
 
