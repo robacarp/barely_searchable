@@ -1,6 +1,6 @@
 # BarelySearchable
 
-This is a bare-bones "search" function for your model layer.  Use with care, this is sequel trickery.
+This is a bare-bones "search" function for your Rails 3 model layer.  Use with care, this is sequel trickery.
 
 It adds `.search` to your models which builds out a simple `LIKE OR` type query to search your models and requires no external service (eg. sphinx) to index the your tables or any index tables.
 
