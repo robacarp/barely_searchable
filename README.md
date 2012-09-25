@@ -29,7 +29,7 @@ Now elsewhere in your application:
   end
 ```
 
-## More details:
+## More details
 
 In your models, you can specify conditions on the search parameters to exclude them from searches.  This is useful for search query optimization or selective searches.
 
